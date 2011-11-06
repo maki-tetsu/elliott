@@ -6,7 +6,7 @@ gem 'rails', '3.1.1'
 # gem 'rails',     :git => 'git://github.com/rails/rails.git'
 
 gem 'pg'
-
+gem 'authlogic'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -21,6 +21,11 @@ gem 'jquery-rails'
 group :test, :development do
   gem "rspec-rails", "~> 2.4"
   gem "therubyracer", "~> 0.9.8"
+  gem "factory_girl_rails"
+  gem "rails3-generators"
+  gem "guard-rspec"
+  gem "rb-inotify", :require => false
+  gem "libnotify", :require => false
 end
 
 # To use ActiveModel has_secure_password

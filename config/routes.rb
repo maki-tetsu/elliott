@@ -1,4 +1,11 @@
 Elliott::Application.routes.draw do
+  resource :user_session, :only => [:new, :create, :destroy]
+  match "sign_in" => 'user_sessions#new'
+  match "authenticate" => 'user_sessions#create'
+  match "sign_out" => 'user_sessions#destroy'
+  
+  root :to => "user_sessions#new"
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
