@@ -1,4 +1,0 @@
-require 'spec_helper'
-
-describe UserSessionsController, "GET" do
-end
