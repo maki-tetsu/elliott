@@ -90,6 +90,126 @@ describe ApplicationController, "helper methods" do
   end
 end
 
+describe ApplicationController, "require user session filter method" do
+  describe "#store_location" do
+    before(:each) do
+      @uri = "/"
+      request.stub(:request_uri).and_return(@uri)
+    end
+
+    it "request.request_uri が呼ばれること" do
+      request.should_receive(:request_uri).and_return(@uri)
+      controller.instance_eval {
+        store_location
+      }
+    end
+
+    it "session[:return_to] に URI が設定されること" do
+      controller.instance_eval {
+        store_location
+      }
+      session[:return_to].should == @uri
+    end
+  end
+
+  describe "#redirect_back_or_default" do
+    before(:each) do
+      @return_to = "/"
+    end
+
+    context "redirect 先が登録されているとき" do
+      before(:each) do
+        session[:return_to] = @return_to
+      end
+
+      it "redirect 先にリダイレクトされること" do
+        controller.should_receive(:redirect_to).with(@return_to)
+        controller.instance_eval {
+          redirect_back_or_default("/somewhere")
+        }
+      end
+
+      it "redirect 先が nil になること" do
+        controller.stub(:redirect_to)
+        controller.instance_eval {
+          redirect_back_or_default("/somewhere")
+        }
+        session[:return_to].should be_nil
+      end
+    end
+
+    context "リダイレクト先が登録されていないとき" do
+      before(:each) do
+        session[:return_to] = nil
+      end
+
+      it "指定されたデフォルト URI に転送されること" do
+        controller.should_receive(:redirect_to).with("/somewhere")
+        controller.instance_eval {
+          redirect_back_or_default("/somewhere")
+        }
+      end
+    end
+  end
+
+  describe "#require_user" do
+    context "ユーザセッションが存在しない時" do
+      before(:each) do
+        controller.stub(:current_user).and_return(nil)
+        controller.stub(:redirect_to)
+        controller.stub(:store_location)
+      end
+
+      it "ログインアクションにリダイレクトされること" do
+        controller.should_receive(:redirect_to).with(new_user_session_url)
+        controller.instance_eval {
+          require_user
+        }
+      end
+
+      it "store_location が呼ばれること" do
+        controller.should_receive(:store_location)
+        controller.instance_eval {
+          require_user
+        }
+      end
+
+      it "flash[:notice] に「ログインしてください。」が設定されること" do
+        controller.instance_eval {
+          require_user
+        }
+        flash[:notice].should == "ログインしてください。"
+      end
+
+      it "false が返却されること" do
+        controller.instance_eval {
+          require_user
+        }.should be_false
+      end
+    end
+
+    context "ユーザセッションが存在する時" do
+      before(:each) do
+        @user_mock = mock_model(User)
+        controller.stub(:current_user).and_return(@user_mock)
+      end
+
+      it "リダイレクトされないこと" do
+        controller.should_not_receive(:redirect_to)
+        controller.instance_eval {
+          require_user
+        }
+      end
+
+      it "false もしくは nil が返却されないこと" do
+        controller.instance_eval {
+          require_user
+        }.should_not == false
+      end
+    end
+  end
+end
+
 describe ApplicationController, "#iphone_request?" do
   context "iPhoneからのアクセスの時" do
     before(:each) do
