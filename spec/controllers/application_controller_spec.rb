@@ -79,17 +79,17 @@ describe ApplicationController, "#iphone_request?" do
     end
 
     it "true が返されること" do
-      controller.iphone_request?.should be_true
+      controller.send(:iphone_request?).should be_true
     end
   end
 
-  context "iPhone意外からのアクセスの時" do
+  context "iPhone以外からのアクセスの時" do
     before(:each) do
       request.env['HPPT_USER_AGENT'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; ja-JP) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0 Safari/533.16'
     end
 
     it "false が返されること" do
-      controller.iphone_request?.should be_false
+      controller.send(:iphone_request?).should be_false
     end
   end
 end
@@ -101,17 +101,17 @@ describe ApplicationController, "#set_layout" do
     end
 
     it "iphone が返されること" do
-      controller.set_layout.should == "iphone"
+      controller.send(:set_layout).should == "iphone"
     end
   end
 
-  context "iPhone意外からのアクセスの時" do
+  context "iPhone以外からのアクセスの時" do
     before(:each) do
       request.env['HPPT_USER_AGENT'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; ja-JP) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0 Safari/533.16'
     end
 
     it "application が返されること" do
-      controller.set_layout.should == "application"
+      controller.send(:set_layout).should == "application"
     end
   end
 end
