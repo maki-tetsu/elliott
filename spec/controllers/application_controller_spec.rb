@@ -71,3 +71,47 @@ describe ApplicationController, "helper methods" do
     end
   end
 end
+
+describe ApplicationController, "#iphone_request?" do
+  context "iPhoneからのアクセスの時" do
+    before(:each) do
+      request.env['HTTP_USER_AGENT'] = 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 2_0 like Mac OS X; ja-jp) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5A345 Safari/525.20'
+    end
+
+    it "true が返されること" do
+      controller.send(:iphone_request?).should be_true
+    end
+  end
+
+  context "iPhone以外からのアクセスの時" do
+    before(:each) do
+      request.env['HPPT_USER_AGENT'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; ja-JP) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0 Safari/533.16'
+    end
+
+    it "false が返されること" do
+      controller.send(:iphone_request?).should be_false
+    end
+  end
+end
+
+describe ApplicationController, "#set_layout" do
+  context "iPhoneからのアクセスの時" do
+    before(:each) do
+      request.env['HTTP_USER_AGENT'] = 'Mozilla/5.0 (iPhone; U; CPU iPhone OS 2_0 like Mac OS X; ja-jp) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5A345 Safari/525.20'
+    end
+
+    it "iphone が返されること" do
+      controller.send(:set_layout).should == "iphone"
+    end
+  end
+
+  context "iPhone以外からのアクセスの時" do
+    before(:each) do
+      request.env['HPPT_USER_AGENT'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; ja-JP) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0 Safari/533.16'
+    end
+
+    it "application が返されること" do
+      controller.send(:set_layout).should == "application"
+    end
+  end
+end
