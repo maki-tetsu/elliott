@@ -94,11 +94,11 @@ describe ApplicationController, "require user session filter method" do
   describe "#store_location" do
     before(:each) do
       @uri = "/"
-      request.stub(:request_uri).and_return(@uri)
+      request.stub(:fullpath).and_return(@uri)
     end
 
-    it "request.request_uri が呼ばれること" do
-      request.should_receive(:request_uri).and_return(@uri)
+    it "request.fullpath が呼ばれること" do
+      request.should_receive(:fullpath).and_return(@uri)
       controller.instance_eval {
         store_location
       }
@@ -205,6 +205,63 @@ describe ApplicationController, "require user session filter method" do
         controller.instance_eval {
           require_user
         }.should_not == false
+      end
+    end
+  end
+
+  describe "#require_no_user" do
+    context "ユーザセッションが存在しない時" do
+      before(:each) do
+        controller.stub(:current_user).and_return(nil)
+      end
+
+      it "リダイレクトされないこと" do
+        controller.should_not_receive(:redirect_to)
+        controller.instance_eval {
+          require_no_user
+        }
+      end
+
+      it "false もしくは nil が返却されないこと" do
+        controller.instance_eval {
+          require_no_user
+        }.should_not == false
+      end
+    end
+
+    context "ユーザセッションが存在する時" do
+      before(:each) do
+        @user_mock = mock_model(User)
+        controller.stub(:redirect_to)
+        controller.stub(:store_location)
+        controller.stub(:current_user).and_return(@user_mock)
+      end
+
+      it "jobs#index にリダイレクトされること" do
+        controller.should_receive(:redirect_to).with(jobs_url)
+        controller.instance_eval {
+          require_no_user
+        }
+      end
+
+      it "store_location が呼ばれること" do
+        controller.should_receive(:store_location)
+        controller.instance_eval {
+          require_no_user
+        }
+      end
+
+      it "flash[:notice] に「ログアウトしてください。」が設定されること" do
+        controller.instance_eval {
+          require_no_user
+        }
+        flash[:notice].should == "ログアウトしてください。"
+      end
+
+      it "false が返却されること" do
+        controller.instance_eval {
+          require_no_user
+        }.should be_false
       end
     end
   end

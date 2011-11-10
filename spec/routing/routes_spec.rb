@@ -4,7 +4,7 @@ describe :routes do
   context "GET /" do 
     subject { { get: "/" } }
 
-    it { should route_to(controller: "user_sessions", action: "new") }
+    it { should route_to(controller: "jobs", action: "index") }
   end
 
   describe "user_sessions" do 

@@ -160,3 +160,25 @@ describe User, "の検証について" do
     end
   end
 end
+# == Schema Information
+#
+# Table name: users
+#
+#  id                :integer         not null, primary key
+#  login             :string(40)      not null
+#  first_name        :string(100)     not null
+#  family_name       :string(100)     not null
+#  nickname          :string(20)
+#  email             :string(255)     not null
+#  access_level      :integer         not null
+#  crypted_password  :string(255)     not null
+#  password_salt     :string(255)     not null
+#  persistence_token :string(255)     not null
+#  current_login_at  :datetime
+#  last_login_at     :datetime
+#  current_login_ip  :string(255)
+#  last_login_ip     :string(255)
+#  created_at        :datetime
+#  updated_at        :datetime
+#
+
