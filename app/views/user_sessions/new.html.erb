@@ -1,0 +1,18 @@
+<h1>ログイン</h1>
+
+<p>
+  <%= alert %>
+</p>
+<%= form_for @user_session, :url => user_session_path do |f| %>
+  <p>
+    <%= f.label :login %>
+    <%= f.text_field :login %>
+  </p>
+  <p>
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </p>
+  <p>
+    <%= f.submit "ログイン" %>
+  </p>
+<% end %>

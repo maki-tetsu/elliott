@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def store_location
-    session[:return_to] = request.request_uri
+    session[:return_to] = request.fullpath
   end
 
   def redirect_back_or_default(default)
@@ -30,6 +30,15 @@ class ApplicationController < ActionController::Base
       store_location
       flash[:notice] = "ログインしてください。"
       redirect_to new_user_session_url
+      return false
+    end
+  end
+
+  def require_no_user
+    if current_user
+      store_location
+      flash[:notice] = "ログアウトしてください。"
+      redirect_to jobs_url
       return false
     end
   end
