@@ -119,7 +119,7 @@ describe UserSessionsController do
     before(:each) do
       @user_session_mock = stub_model(UserSession)
       controller.stub(:require_user).and_return(true)
-      controller.stub(:current_user).and_return(@user_session_mock)
+      controller.stub(:current_user_session).and_return(@user_session_mock)
       @user_session_mock.stub(:destroy)
     end
 
@@ -129,8 +129,8 @@ describe UserSessionsController do
       delete :destroy
     end
 
-    it "current_user.destroy が呼ばれること" do
-      controller.should_receive(:current_user).and_return(@user_session_mock)
+    it "current_user_session.destroy が呼ばれること" do
+      controller.should_receive(:current_user_session).and_return(@user_session_mock)
       @user_session_mock.should_receive(:destroy)
 
       delete :destroy

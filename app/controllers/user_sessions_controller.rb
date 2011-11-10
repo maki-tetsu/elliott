@@ -22,7 +22,7 @@ class UserSessionsController < ApplicationController
 
   # delete :destroy
   def destroy
-    current_user.destroy
+    current_user_session.destroy
     flash[:notice] = "ログアウトしました。"
     redirect_back_or_default(:action => :new)
   end
