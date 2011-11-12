@@ -5,7 +5,7 @@ Factory.define :user do |u|
   u.family_name "田中"
   u.nickname "タロー"
   u.email "taro@example.com"
-  u.access_level User::ACCESS_LEVELS[:user]
+  u.admin false
   u.password "taro"
   u.password_confirmation "taro"
 end
@@ -16,7 +16,7 @@ Factory.define :admin, :parent => :user do |a|
   a.family_name ""
   a.nickname "シスアド"
   a.email "root@example.com"
-  a.access_level User::ACCESS_LEVELS[:admin]
+  a.admin true
   a.password "admin"
   a.password_confirmation "admin"
 end

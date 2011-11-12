@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class ApplicationController < ActionController::Base
   protect_from_forgery
+  layout :set_layout
   before_filter :set_iphone_format
   helper_method :current_user_session, :current_user
 
@@ -47,11 +48,15 @@ class ApplicationController < ActionController::Base
     request.user_agent =~ /(Mobile\/.+Safari)/
   end
 
+  def android_request?
+    request.user_agent =~ /(Android\s.+Mobile)/
+  end
+
   def set_iphone_format
-    request.format = :iphone if iphone_request?
+    request.format = :iphone if (iphone_request? || android_request?)
   end
 
   def set_layout
-    iphone_request? ? "iphone" : "application"
+    (iphone_request? || android_request?) ? "iphone" : "application"
   end
 end

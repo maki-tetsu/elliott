@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111106001051) do
+ActiveRecord::Schema.define(:version => 20111113233552) do
 
   create_table "users", :force => true do |t|
     t.string   "login",             :limit => 40,  :null => false
@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(:version => 20111106001051) do
     t.string   "family_name",       :limit => 100, :null => false
     t.string   "nickname",          :limit => 20
     t.string   "email",                            :null => false
-    t.integer  "access_level",                     :null => false
     t.string   "crypted_password",                 :null => false
     t.string   "password_salt",                    :null => false
     t.string   "persistence_token",                :null => false
@@ -29,6 +28,7 @@ ActiveRecord::Schema.define(:version => 20111106001051) do
     t.string   "last_login_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "admin",                            :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

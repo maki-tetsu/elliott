@@ -1,15 +1,5 @@
 # -*- coding: utf-8 -*-
 class User < ActiveRecord::Base
-  ### ユーザのアクセスレベル定義
-  ACCESS_LEVELS = {
-    :user  => 1, # 一般ユーザ
-    :admin => 2, # システム管理者
-  }
-  ACCESS_LEVEL_NAMES = {
-    :user  => "一般ユーザ",
-    :admin => "システム管理者",
-  }
-
   # authlogic setup
   acts_as_authentic do |c|
     # login
@@ -29,8 +19,6 @@ class User < ActiveRecord::Base
   validates :family_name, :length => { :maximum => 100, :allow_blank => true }
   # nickname
   validates :nickname, :length => { :maximum => 20, :allow_blank => true }
-  # access_level
-  validates :access_level, :inclusion => { :in => ACCESS_LEVELS.values }
 end
 # == Schema Information
 #
@@ -42,7 +30,6 @@ end
 #  family_name       :string(100)     not null
 #  nickname          :string(20)
 #  email             :string(255)     not null
-#  access_level      :integer         not null
 #  crypted_password  :string(255)     not null
 #  password_salt     :string(255)     not null
 #  persistence_token :string(255)     not null
@@ -52,5 +39,6 @@ end
 #  last_login_ip     :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
+#  admin             :boolean         not null
 #
 
