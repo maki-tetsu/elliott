@@ -117,48 +117,6 @@ describe User, "の検証について" do
       it { should_not be_valid }
     end
   end
-
-  context "#access_level について" do 
-    context "#access_level がブランクとき" do 
-      before(:each) do 
-        @user = Factory.build(:user, :access_level => "")
-      end
-
-      subject { @user }
-      
-      it { should_not be_valid }
-    end
-
-    context "#access_level が User::ACCESS_LEVELS[:user] のとき" do 
-      before(:each) do 
-        @user = Factory.build(:user, :access_level => User::ACCESS_LEVELS[:user])
-      end
-
-      subject { @user }
-      
-      it { should be_valid }
-    end
-
-    context "#access_level が User::ACCESS_LEVELS[:admin] のとき" do 
-      before(:each) do 
-        @user = Factory.build(:user, :access_level => User::ACCESS_LEVELS[:admin])
-      end
-
-      subject { @user }
-      
-      it { should be_valid }
-    end
-
-    context "#access_level が 0 のとき" do 
-      before(:each) do 
-        @user = Factory.build(:user, :access_level => 0)
-      end
-
-      subject { @user }
-      
-      it { should_not be_valid }
-    end
-  end
 end
 # == Schema Information
 #
@@ -170,7 +128,6 @@ end
 #  family_name       :string(100)     not null
 #  nickname          :string(20)
 #  email             :string(255)     not null
-#  access_level      :integer         not null
 #  crypted_password  :string(255)     not null
 #  password_salt     :string(255)     not null
 #  persistence_token :string(255)     not null
@@ -180,5 +137,6 @@ end
 #  last_login_ip     :string(255)
 #  created_at        :datetime
 #  updated_at        :datetime
+#  admin             :boolean         not null
 #
 
