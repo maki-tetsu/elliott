@@ -11,6 +11,11 @@ describe UserSessionsController do
       controller.stub(:require_no_user).and_return(true)
     end
 
+    describe :routes do
+      subject { {:get => "/user_session/new"} }
+      it { should route_to(controller: "user_sessions", action: "new") }
+    end
+
     it {
       get :new
 
@@ -44,6 +49,11 @@ describe UserSessionsController do
       controller.stub(:require_no_user).and_return(true)
 
       UserSession.stub(:new).with(@params[:user_session]).and_return(@user_session_mock)
+    end
+
+    describe :routes do
+      subject { {:post => "/user_session"} }
+      it { should route_to(controller: "user_sessions", action: "create") }
     end
 
     it "require_no_user フィルタが呼ばれること" do
@@ -121,6 +131,11 @@ describe UserSessionsController do
       controller.stub(:require_user).and_return(true)
       controller.stub(:current_user_session).and_return(@user_session_mock)
       @user_session_mock.stub(:destroy)
+    end
+
+    describe :routes do
+      subject { {:delete => "/user_session"} }
+      it { should route_to(controller: "user_sessions", action: "destroy") }
     end
 
     it "require_user フィルタが呼ばれること" do

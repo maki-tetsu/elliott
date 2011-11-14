@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 require "spec_helper"
 
+describe ApplicationController, "routes" do
+    subject { {:get => "/"} }
+    it { should route_to(controller: "jobs", action: "index") }
+end
+
 describe ApplicationController, "helper methods" do
   describe "current_user_session" do
     before(:each) do
