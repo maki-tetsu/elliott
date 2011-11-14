@@ -289,6 +289,28 @@ describe ApplicationController, "#iphone_request?" do
   end
 end
 
+describe ApplicationController, "#android_request?" do
+  context "Androidからのアクセスの時" do
+    before(:each) do
+      request.env['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; U; Android 2.2; ja-jp; SC-02B Build/FROYO) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    end
+
+    it "true が返されること" do
+      controller.send(:android_request?).should be_true
+    end
+  end
+
+  context "Android以外からのアクセスの時" do
+    before(:each) do
+      request.env['HPPT_USER_AGENT'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; ja-JP) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0 Safari/533.16'
+    end
+
+    it "false が返されること" do
+      controller.send(:android_request?).should be_false
+    end
+  end
+end
+
 describe ApplicationController, "#set_layout" do
   context "iPhoneからのアクセスの時" do
     before(:each) do
@@ -300,7 +322,17 @@ describe ApplicationController, "#set_layout" do
     end
   end
 
-  context "iPhone以外からのアクセスの時" do
+  context "Androioからのアクセスの時" do
+    before(:each) do
+      request.env['HTTP_USER_AGENT'] = 'Mozilla/5.0 (Linux; U; Android 2.2; ja-jp; SC-02B Build/FROYO) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 Mobile Safari/533.1'
+    end
+
+    it "iphone が返されること" do
+      controller.send(:set_layout).should == "iphone"
+    end
+  end
+
+  context "iPhone・Android以外からのアクセスの時" do
     before(:each) do
       request.env['HPPT_USER_AGENT'] = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; ja-JP) AppleWebKit/533.18.1 (KHTML, like Gecko) Version/5.0 Safari/533.16'
     end
