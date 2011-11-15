@@ -1,0 +1,67 @@
+<div data-role="header">
+<%= link_to 'Back', jobs_path %>
+<h1><%= @job.name %></h1>
+<%= link_to 'Edit', edit_job_path(@job) %>
+</div>
+
+<p>
+  <b>JOB番号:</b>
+  <%= @job.code %>
+</p>
+
+<p>
+  <b>案件名:</b>
+  <%= @job.name %>
+</p>
+
+<p>
+  <b>概要:</b>
+  <%= @job.description %>
+</p>
+
+<p>
+  <b>顧客:</b>
+  <%= @job.customer %>
+</p>
+
+<p>
+  <b>納期:</b>
+  <%= @job.due_date %>
+</p>
+
+<p>
+  <b>期間（開始）:</b>
+  <%= @job.start_date %>
+</p>
+
+<p>
+  <b>期間（終了）:</b>
+  <%= @job.end_date %>
+</p>
+
+<p>
+  <b>予算:</b>
+  <%= @job.budget %>
+</p>
+
+<p>
+  <b>見積書提出:</b>
+  <%= @job.estimate_submitted_date %>
+</p>
+
+<p>
+  <b>登録者:</b>
+  <%= @job.register_name %>
+</p>
+
+<p>
+  <b>登録日:</b>
+  <%= @job.registed_at %>
+</p>
+
+<p>
+  <b>備考:</b>
+  <%= @job.note %>
+</p>
+
+<a href="/jobs/1" data-method="delete" data-role="button" data-icon="delete">削除</delete>

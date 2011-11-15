@@ -1,0 +1,12 @@
+<div data-role="header" data-position="inline">
+<h1>ジョブ一覧</h1>
+<%= link_to 'New', new_job_path, :class =>"ui-btn-right" %>
+</div>
+
+<ul data-role="listview">
+<% @jobs.each do |job| %>
+  <li><%= link_to raw("<p>#{job.code}</p><h3>#{job.name}</h3>"), job %></li>
+<% end %>
+</ul>
+
+<%= button_to("ログアウト", user_session_path(current_user), :method => "delete") %>
