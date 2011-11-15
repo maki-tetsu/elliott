@@ -11,7 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111113233552) do
+ActiveRecord::Schema.define(:version => 20111115111854) do
+
+  create_table "jobs", :force => true do |t|
+    t.string   "code",                    :limit => 7, :null => false
+    t.string   "name",                                 :null => false
+    t.string   "description"
+    t.string   "customer"
+    t.date     "due_date"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.decimal  "budget"
+    t.date     "estimate_submitted_date"
+    t.integer  "register_id",                          :null => false
+    t.string   "register_name",                        :null => false
+    t.datetime "registed_at",                          :null => false
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "jobs", ["code"], :name => "index_jobs_on_code", :unique => true
 
   create_table "users", :force => true do |t|
     t.string   "login",             :limit => 40,  :null => false
