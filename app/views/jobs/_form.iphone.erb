@@ -1,0 +1,69 @@
+<%= form_for(@job) do |f| %>
+  <% if @job.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@job.errors.count, "error") %> prohibited this job from being saved:</h2>
+
+      <ul>
+      <% @job.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :code, "JOB番号" %><br />
+    <%= f.text_field :code %>
+  </div>
+  <div class="field">
+    <%= f.label :name, "案件名" %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description, "概要" %><br />
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :customer, "顧客" %><br />
+    <%= f.text_field :customer %>
+  </div>
+  <div class="field">
+    <%= f.label :due_date, "納期" %><br />
+    <input type="date" id="job_due_date" name="job[due_date]" value=""/>
+  </div>
+  <div class="field">
+    <%= f.label :start_date, "期間（開始）" %><br />
+    <input type="date" id="job_start_date" name="job[start_date]" value=""/>
+  </div>
+  <div class="field">
+    <%= f.label :end_date, "期間（終了）" %><br />
+    <input type="date" id="job_end_date" name="job[end_date]" value=""/>
+  </div>
+  <div class="field">
+    <%= f.label :budget, "予算" %><br />
+    <%= f.text_field :budget %>
+  </div>
+  <div class="field">
+    <%= f.label :estimate_submitted_date, "見積書提出" %><br />
+    <input type="date" id="job_estimate_submitted_date" name="job[estimate_submitted_date]" value=""/>
+  </div>
+  <div class="field">
+    <%= f.label :register_id, "登録ユーザーID" %><br />
+    <%= f.number_field :register_id %>
+  </div>
+  <div class="field">
+    <%= f.label :register_name, "登録ユーザー名" %><br />
+    <%= f.text_field :register_name %>
+  </div>
+  <div class="field">
+    <%= f.label :registed_at, "登録日" %><br />
+    <input type="date" id="job_registed_at" name="job[registed_at]" value=""/>
+  </div>
+  <div class="field">
+    <%= f.label :note, "備考" %><br />
+    <%= f.text_area :note %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
